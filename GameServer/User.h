@@ -1,4 +1,5 @@
 #pragma once
+struct GUILD_INFO_STRUCT; // Declaración adelantada
 
 //#include "CommandManager.h"
 #include "ComboSkill.h"

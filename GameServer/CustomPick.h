@@ -28,6 +28,7 @@ public:
 	void ItemGet(LPOBJ lpObj);
 	void PickProc(LPOBJ lpObj);
 	bool CommandPick(LPOBJ lpObj,char* arg);
+	bool IsItemInPickList(int ItemIndex); // <-- AÑADE ESTA LÍNEA
 private:
 	std::map<int,CUSTOMPICK_INFO> m_CustomPickInfo;
 };

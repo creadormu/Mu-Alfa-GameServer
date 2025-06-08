@@ -23,6 +23,7 @@
 #include "MapManager.h"
 #include "Log.h"
 #include "ItemLevel.h"
+#include "DSProtocol.h"
 
 OfflineMode g_OfflineMode;
 
@@ -49,10 +50,16 @@ void OfflineMode::ReadOffLine(char* section,char* path)
 	this->m_MUOffHelperTimer[3] = GetPrivateProfileInt(section, "MuOffHelperTime_AL3", -1, path);
 }
 
-void OfflineMode::OnHelperpAlreadyConnected(LPOBJ lpObj) // OK
+void OfflineMode::OnHelperpAlreadyConnected(LPOBJ lpObj)
 {
-	if(lpObj->m_OfflineMode != 0)
+	if (lpObj->m_OfflineMode != 0)
 	{
+		// Aquí serializas el inventario directamente
+		BYTE InventoryBuffer[INVENTORY_SIZE];
+		memcpy(InventoryBuffer, lpObj->Inventory, INVENTORY_SIZE);
+
+		// Luego lo envías por red (ejemplo)
+		DataSend(lpObj->Index, InventoryBuffer, INVENTORY_SIZE);
 		gObjDel(lpObj->Index);
 		lpObj->m_OfflineMode = 0;
 		lpObj->MuOffHelperTime = 0;

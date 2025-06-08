@@ -36,6 +36,9 @@
 #include "FakeOnline.h"
 #include "SkyEvent.h"
 #include "SwampEvent.h"
+#include "User.h"
+#include "Guild.h"
+
 
 TCHAR szTitle[MAX_LOADSTRING];
 TCHAR szWindowClass[MAX_LOADSTRING];
