@@ -75,7 +75,7 @@ public:
 	int AccountsRestored;
 	DWORD TimeFakeLogIn;
     std::map<int, BotActivePVPCombatState> m_botPVPCombatStates; 
-	//void CheckAutoReset(LPOBJ lpObj); // Asegúrate que esta línea exista
+	void CheckAutoReset(LPOBJ lpObj); // Asegúrate que esta línea exista
 
 private:
 	DWORD m_dwLastCommentTick[MAX_OBJECT];

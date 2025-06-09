@@ -545,18 +545,3 @@ bool CCustomPick::CommandPick(LPOBJ lpObj,char* arg)
 #endif
 
 }
-
-
-bool CCustomPick::IsItemInPickList(int ItemIndex)
-{
-	// Esta función itera sobre todos los ítems cargados desde CustomPick.txt
-	for (std::map<int, CUSTOMPICK_INFO>::iterator it = this->m_CustomPickInfo.begin(); it != this->m_CustomPickInfo.end(); ++it)
-	{
-		// Compara si el ítem del suelo (ItemIndex) coincide con alguno de la lista
-		if (GET_ITEM(it->second.Cat, it->second.Item) == ItemIndex)
-		{
-			return true; // ¡Sí está en la lista!
-		}
-	}
-	return false; // No está en la lista
-}

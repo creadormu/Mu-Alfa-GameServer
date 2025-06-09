@@ -38,9 +38,6 @@
 #include "DefaultClassInfo.h" 
 #include <cmath> 
 #include "pugixml.hpp" 
-#include <cstdlib> // For rand()
-#include <ctime>   // For seeding random numbers
-
 
 #if USE_FAKE_ONLINE == TRUE // INICIO DEL BLOQUE CONDICIONAL
 
@@ -209,13 +206,7 @@ void LoadBotPhrasesFromFile(const char* filename)
     if (file.is_open()) file.close();
 }
 
-std::string GetRandomBotPhrase(int currentMap, bool realPlayerNearby, bool inParty, bool inActivePVPCombat)
-{
-	return std::string();
-}
-
-
-static std::string GetRandomBotPhrase(int botDBClass, int currentMap, bool realPlayerNearby, bool inParty, bool inActivePVPCombat)
+std::string GetRandomBotPhrase(int botDBClass, int currentMap, bool realPlayerNearby, bool inParty, bool inActivePVPCombat)
 {
     const std::vector<std::string>* pSelectedList = nullptr;
     if (inActivePVPCombat && !g_BotPhrasesPVP.empty()) { pSelectedList = &g_BotPhrasesPVP; }
@@ -570,9 +561,7 @@ int CFakeOnline::NhatItem(int aIndex)
 
 	for (int n = 0; n < MAX_MAP_ITEM; n++) {
 		lpMapItem = &gMap[map_num].m_Item[n];
-
-		if (lpMapItem->IsItem() == TRUE && lpMapItem->m_Give == 0 && lpMapItem->m_Live != 0) {
-			
+		if (lpMapItem->IsItem() == TRUE  && lpMapItem->m_Give == false && lpMapItem->m_Live == true) {
 			dis = (int)sqrt(pow(((float)lpObj->X - (float)lpMapItem->m_X), 2) + pow(((float)lpObj->Y - (float)lpMapItem->m_Y), 2)); 
 			if (dis > distanceToPickup) continue;
 
@@ -664,11 +653,7 @@ void CFakeOnline::QuayLaiToaDoGoc(int aIndex) {
 		if (lpObj->State == OBJECT_DELCMD || lpObj->DieRegen != 0 || lpObj->Teleport != 0) { return; }
 		int PhamViDiTrain = (int)sqrt(pow(((float)lpObj->X - (float)info->MapX), 2) + pow(((float)lpObj->Y - (float)info->MapY), 2));
 
-			if ((GetTickCount() >= static_cast<DWORD>(lpObj->IsFakeTimeLag) + 30000) &&
-				(GetTickCount() >= static_cast<DWORD>(lpObj->AttackCustomDelay) + 30000) &&
-				lpObj->IsFakeRegen &&
-				(GetTickCount() >= static_cast<DWORD>(lpObj->m_OfflineMoveDelay) + 30000)) {
-			
+		if ((GetTickCount() >= lpObj->IsFakeTimeLag + 30000) && (GetTickCount() >= lpObj->AttackCustomDelay + 30000) && lpObj->IsFakeRegen && (GetTickCount() >= lpObj->m_OfflineMoveDelay + 30000)) {
 			lpObj->IsFakeRegen = false;
 			lpObj->IsFakeTimeLag = GetTickCount();
 			lpObj->m_OfflineMoveDelay = GetTickCount();
@@ -717,9 +702,8 @@ void CFakeOnline::QuayLaiToaDoGoc(int aIndex) {
 				int MoveRangeVal = 3; 
 				int maxmoverange = MoveRangeVal * 2 + 1;
 				int searchc = 10;
-				
-				BYTE tpx = static_cast<BYTE>(lpObj->X);
-				BYTE tpy = static_cast<BYTE>(lpObj->Y);
+				BYTE tpx = lpObj->X; 
+				BYTE tpy = lpObj->Y;
 
 				while (searchc-- != 0) {
 					int randXOffset = (GetLargeRand() % maxmoverange) - MoveRangeVal; 
